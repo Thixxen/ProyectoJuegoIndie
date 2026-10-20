@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 2401077936021015822}
   - component: {fileID: 6891698322428311330}
   - component: {fileID: 7221119859359488772}
+  - component: {fileID: 7319521803910520043}
   m_Layer: 0
   m_Name: Player_Network
   m_TagString: Untagged
@@ -376,6 +377,31 @@ MonoBehaviour:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
     m_InternalValue: 100
+--- !u!114 &7319521803910520043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2695627526529739136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b671158d1b9124e85ed1d466e7ec05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArmaRaycast
+  ShowTopMostFoldoutHeaderGroup: 1
+  dano: 20
+  alcance: 150
+  disparosPorSegundo: 8
+  playerCamera: {fileID: 8131585982723794142}
+  capasImpacto:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  mostrarMira: 1
+  tamanoMira: 8
+  grosorMira: 2
+  separacionMira: 3
+  colorMira: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &8985797421133509951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -384,6 +410,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8131585982723794142}
     m_Modifications:
+    - target: {fileID: -3967899957730477514, guid: 24a214b4d152d0147b40c88965fe69fb, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 4518884742267612074}
+    - target: {fileID: -1206184281731899504, guid: 24a214b4d152d0147b40c88965fe69fb, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3533130034
+      objectReference: {fileID: 0}
     - target: {fileID: 1144421212935649429, guid: 24a214b4d152d0147b40c88965fe69fb, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3452812816
@@ -436,7 +470,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: M4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -3967899957730477514, guid: 24a214b4d152d0147b40c88965fe69fb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

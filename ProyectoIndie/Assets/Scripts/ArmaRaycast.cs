@@ -1,57 +1,81 @@
 
 using UnityEngine;
 using Unity.Netcode;
+using System;
 
 public class ArmaRaycast : NetworkBehaviour
 {
     [Header("Configuracion del arma")]
-    public float dano = 20f;
-    public float alcance = 150f;
-    public float disparosPorSegundo = 8f;
+    [SerializeField] private float dano = 20f;
+    [SerializeField] private float alcance = 150f;
+    [SerializeField] private float disparosPorSegundo = 8f;
 
     [Header("Referencias")]
-    public LayerMask capasImpacto = ~0;
+    [SerializeField] private Transform playerCamera;
+    [SerializeField] private LayerMask capasImpacto = ~0;
 
-    private Camera camaraJugador;
+    [Header("Mira")]
+    [SerializeField] private bool mostrarMira = true;
+    [SerializeField] private float tamanoMira = 8f;
+    [SerializeField] private float grosorMira = 2f;
+    [SerializeField] private float separacionMira = 3f;
+    [SerializeField] private Color colorMira = Color.white;
+
+    private NetworkObject jugador;
     private float proximoDisparo;
     private float siguienteDisparoServidor;
 
-    public override void OnNetworkSpawn()
+    private void Awake()
     {
-        if (!IsOwner) return;
+        jugador = GetComponentInParent<NetworkObject>();
 
-        // Buscar automaticamente la camara del jugador
-        camaraJugador = GetComponentInChildren<Camera>(true);
-
-        if (camaraJugador == null)
-        {
-            Debug.LogWarning(
-                "ArmaRaycast: No se encontro la camara del jugador."
-            );
-        }
+        if (jugador == null)
+            jugador = GetComponent<NetworkObject>();
     }
 
-    void Update()
+    public override void OnNetworkSpawn()
     {
-        if (!IsSpawned || !IsOwner) return;
-
-        if (camaraJugador == null)
+        if (playerCamera == null && jugador != null)
         {
-            camaraJugador = GetComponentInChildren<Camera>(true);
-            if (camaraJugador == null) return;
+            Camera camara = jugador.GetComponentInChildren<Camera>(true);
+
+            if (camara != null)
+                playerCamera = camara.transform;
         }
 
-        if (Input.GetMouseButton(0) &&
-            Time.time >= proximoDisparo)
-        {
-            proximoDisparo =
-                Time.time + 1f / Mathf.Max(0.1f, disparosPorSegundo);
+        if (playerCamera == null)
+            Debug.LogError("ArmaRaycast: asigna la camara del jugador en el Inspector.");
+    }
 
-            Vector3 origen = camaraJugador.transform.position;
-            Vector3 direccion = camaraJugador.transform.forward;
+    private void Update()
+    {
+        if (!IsSpawned || !IsOwner || playerCamera == null)
+            return;
 
-            SolicitarDisparoRpc(origen, direccion);
-        }
+        if (!Input.GetMouseButton(0) || Time.time < proximoDisparo)
+            return;
+
+        proximoDisparo = Time.time + 1f / Mathf.Max(0.1f, disparosPorSegundo);
+
+        SolicitarDisparoRpc(playerCamera.position, playerCamera.forward);
+    }
+
+    private void OnGUI()
+    {
+        if (!mostrarMira || !IsSpawned || !IsOwner)
+            return;
+
+        float x = Screen.width * 0.5f;
+        float y = Screen.height * 0.5f;
+
+        GUI.color = colorMira;
+
+        GUI.DrawTexture(new Rect(x - grosorMira / 2f, y - separacionMira - tamanoMira, grosorMira, tamanoMira), Texture2D.whiteTexture);
+        GUI.DrawTexture(new Rect(x - grosorMira / 2f, y + separacionMira, grosorMira, tamanoMira), Texture2D.whiteTexture);
+        GUI.DrawTexture(new Rect(x - separacionMira - tamanoMira, y - grosorMira / 2f, tamanoMira, grosorMira), Texture2D.whiteTexture);
+        GUI.DrawTexture(new Rect(x + separacionMira, y - grosorMira / 2f, tamanoMira, grosorMira), Texture2D.whiteTexture);
+
+        GUI.color = Color.white;
     }
 
     [Rpc(SendTo.Server)]
@@ -60,20 +84,22 @@ public class ArmaRaycast : NetworkBehaviour
         Vector3 direccion,
         RpcParams rpcParams = default)
     {
-        if (rpcParams.Receive.SenderClientId != OwnerClientId)
+        if (jugador == null || !jugador.IsSpawned)
+            return;
+
+        if (rpcParams.Receive.SenderClientId != jugador.OwnerClientId)
             return;
 
         if (direccion.sqrMagnitude < 0.001f)
             return;
 
-        if (Vector3.Distance(origen, transform.position) > 3f)
+        if (Vector3.Distance(origen, jugador.transform.position) > 3f)
             return;
 
         if (Time.time < siguienteDisparoServidor)
             return;
 
-        siguienteDisparoServidor =
-            Time.time + 1f / Mathf.Max(0.1f, disparosPorSegundo);
+        siguienteDisparoServidor = Time.time + 1f / Mathf.Max(0.1f, disparosPorSegundo);
 
         direccion.Normalize();
 
@@ -85,28 +111,20 @@ public class ArmaRaycast : NetworkBehaviour
             QueryTriggerInteraction.Ignore
         );
 
-        System.Array.Sort(
-            impactos,
-            (a, b) => a.distance.CompareTo(b.distance)
-        );
+        Array.Sort(impactos, (a, b) => a.distance.CompareTo(b.distance));
 
         foreach (RaycastHit impacto in impactos)
         {
-            NetworkObject objeto = impacto.collider
-                .GetComponentInParent<NetworkObject>();
+            NetworkObject objetoImpactado = impacto.collider.GetComponentInParent<NetworkObject>();
 
-            // Ignorar al propio jugador
-            if (objeto != null &&
-                objeto.NetworkObjectId == NetworkObjectId)
+            if (objetoImpactado != null &&
+                objetoImpactado.NetworkObjectId == jugador.NetworkObjectId)
                 continue;
 
-            VidaJugador vida = impacto.collider
-                .GetComponentInParent<VidaJugador>();
+            VidaJugador vida = impacto.collider.GetComponentInParent<VidaJugador>();
 
             if (vida != null)
-            {
                 vida.RecibirDano(dano);
-            }
 
             break;
         }
