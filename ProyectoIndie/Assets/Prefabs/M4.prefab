@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6933600494026609816
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.62204
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.1305156
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.5661905
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7125381
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7016335
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.117
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      propertyPath: m_Name
+      value: M4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -8700617353114198275, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+    - {fileID: 65702495048144492, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1144421212935649429}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3967899957730477514}
+  m_SourcePrefab: {fileID: 100100000, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+--- !u!1 &7852150436606831049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 82d4c06e0707368448943aaea071fe1e, type: 3}
+  m_PrefabInstance: {fileID: 6933600494026609816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1144421212935649429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852150436606831049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2335234222
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &-3967899957730477514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852150436606831049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b671158d1b9124e85ed1d466e7ec05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArmaRaycast
+  ShowTopMostFoldoutHeaderGroup: 1
+  dano: 20
+  alcance: 150
+  disparosPorSegundo: 8
+  capasImpacto:
+    serializedVersion: 2
+    m_Bits: 4294967295
